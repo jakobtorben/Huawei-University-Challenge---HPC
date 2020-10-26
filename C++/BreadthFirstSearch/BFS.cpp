@@ -3,6 +3,8 @@
 // reachable from s. 
 #include<iostream> 
 #include <list> 
+#include <omp.h>
+#include <chrono>
 
 using namespace std;
 
@@ -33,7 +35,7 @@ Graph::Graph(int V)
 
 void Graph::addEdge(int v, int w)
 {
-	adj[v].push_back(w); // Add w to v’s list. 
+	adj[v].push_back(w); // Add w to vï¿½s list. 
 }
 
 void Graph::BFS(int s)
@@ -53,31 +55,45 @@ void Graph::BFS(int s)
 	// 'i' will be used to get all adjacent 
 	// vertices of a vertex 
 	list<int>::iterator i;
+	list<int>::iterator j;
 
+    // Record start time
+	//auto start = std::chrono::high_resolution_clock::now();
 	while (!queue.empty())
 	{
 		// Dequeue a vertex from queue and print it 
 		s = queue.front();
-		cout << s << " ";
+		cout << s << " \n";
 		queue.pop_front();
 
 		// Get all adjacent vertices of the dequeued 
 		// vertex s. If a adjacent has not been visited, 
 		// then mark it visited and enqueue it 
-		for (i = adj[s].begin(); i != adj[s].end(); ++i)
-		{
-			if (!visited[*i])
+		
+		//for (j = queue[s].begin(); j != adj[s].end(); ++i)
+		
+		#pragma omp parallel for 
+	    {
+			for (i = adj[s].begin(); i != adj[s].end(); ++i)
 			{
-				visited[*i] = true;
-				queue.push_back(*i);
+				if (!visited[*i])
+				{
+					visited[*i] = true;
+					queue.push_back(*i);
+				}
 			}
 		}
+		
 	}
+	//auto finish = std::chrono::high_resolution_clock::now();
+	//std::cout << "Elapsed time: "<<(finish-start).count() << "s\n";
 }
 
+using namespace std::chrono;
 // Driver program to test methods of graph class 
 int main()
 {
+	auto start = high_resolution_clock::now();
 	// Create a graph given in the above diagram 
 	Graph g(4);
 	g.addEdge(0, 1);
@@ -90,6 +106,8 @@ int main()
 	cout << "Following is Breadth First Traversal "
 		<< "(starting from vertex 2) \n";
 	g.BFS(2);
-
+	auto stop = high_resolution_clock::now();
+    auto duration = duration_cast<microseconds>(stop - start);
+	cout << duration.count() << " microsecs\n";
 	return 0;
 }
