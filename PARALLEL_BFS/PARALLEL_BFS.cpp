@@ -74,17 +74,19 @@ std::list<int> Graph::BFS(int s)
 		// then mark it visited and enqueue it 
 
 
-		//#pragma omp parallel for
-
-		for (i = adj[s].begin(); i != adj[s].end(); ++i)
+		#pragma omp parallel
 		{
-			//int ID = omp_get_thread_num();
-			//cout << "thread id is " << ID << "\n";
 
-			if (!visited[*i])
+			for (i = adj[s].begin(); i != adj[s].end(); ++i)
 			{
-				visited[*i] = true;
-				queue.push_back(*i);
+				//int ID = omp_get_thread_num();
+				//cout << "thread id is " << ID << "\n";
+
+				if (!visited[*i])
+				{
+					visited[*i] = true;
+					queue.push_back(*i);
+				}
 			}
 		}
 
@@ -110,10 +112,11 @@ void write_to_file(const std::list<T, A>& seq, const char* path2file)
 	file.close();
 }
 
-// Driver program to test methods of graph class 
+// Driver program for graph class 
 int main(int argc, char*argv[])
 {	
 	//auto start = std::chrono::high_resolution_clock::now();
+	
 	
 	// Read in data 
 	std::string line;
