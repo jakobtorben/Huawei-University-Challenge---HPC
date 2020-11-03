@@ -99,9 +99,14 @@ template< typename T, typename A >
 void write_to_file(const std::list<T, A>& seq, const char* path2file)
 {
 	std::ofstream file(path2file);
+	auto first = true;
 	file << "[";
-	for (const auto& v : seq) file << v << ',';
-	file << "]";
+	for (const auto& v : seq) {
+		if (!first) { file << ","; }
+		first = false;
+		file << v;
+	}
+	file << "]" << std::endl;
 	file.close();
 }
 
