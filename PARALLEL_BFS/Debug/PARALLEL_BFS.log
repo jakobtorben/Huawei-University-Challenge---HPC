@@ -1,0 +1,4 @@
+﻿  PARALLEL_BFS.cpp
+C:\Users\jolaa\Documents\POST GRAD IMPERIAL\HuaweiUniChallenge\PARALLEL_BFS\PARALLEL_BFS.cpp(74,1): error C3015: initialization in OpenMP 'for' statement has improper form
+C:\Users\jolaa\Documents\POST GRAD IMPERIAL\HuaweiUniChallenge\PARALLEL_BFS\PARALLEL_BFS.cpp(74,1): error C3017: termination test in OpenMP 'for' statement has improper form
+C:\Users\jolaa\Documents\POST GRAD IMPERIAL\HuaweiUniChallenge\PARALLEL_BFS\PARALLEL_BFS.cpp(74,1): error C3019: increment in OpenMP 'for' statement has improper form

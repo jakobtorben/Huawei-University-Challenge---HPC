@@ -1,0 +1,9 @@
+# Huawei-University-Challenge---HPC
+We implemented a simple BFS search using adjanceny list in C++.
+The program workflow involves reading the graph input, creating the graph and completing a Breadth
+First Search in parallel. 
+
+Team Members:
+Mustapha Jolaade
+Jakob Torben
+Jon Atli Tomasson
